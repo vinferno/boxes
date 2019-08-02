@@ -32,16 +32,16 @@ class Server {
     constructor() {
         // Create expressjs application
         this.app = express();
-        this.app.use(express.static(path.resolve('boxes/dist/boxes/')));
+        this.app.use(express.static(path.resolve('dist/boxes/')));
         // Route our backend calls
         this.app.get('/api', (req, res) => res.json({ application: 'Reibo collection' }));
 
         // Redirect all the other resquests
         this.app.get('*', (req: Request, res: Response) => {
             if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
-                res.sendFile(path.resolve('boxes/dist/boxes/index.html'));
+                res.sendFile(path.resolve('dist/boxes/index.html'));
             } else {
-                res.sendFile(path.resolve('boxes/dist/boxes/index.html'));
+                res.sendFile(path.resolve('dist/boxes/index.html'));
             }
         });
 

@@ -4,7 +4,9 @@ import { Request, Response } from 'express-serve-static-core';
 import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as moment from 'moment';
-
+const fs = require('fs');
+const dirs = fs.readdirSync(path.resolve('./'));
+console.log(dirs);
 const express = require('express');
 
 

@@ -5,6 +5,9 @@ require("reflect-metadata");
 var path = require("path");
 var bodyParser = require("body-parser");
 var moment = require("moment");
+var fs = require('fs');
+var dirs = fs.readdirSync(path.resolve('./'));
+console.log(dirs);
 var express = require('express');
 // Allowed extensions list can be extended depending on your own needs
 var allowedExt = [
@@ -24,16 +27,16 @@ var Server = /** @class */ (function () {
         this.port = process.env.PORT ? process.env.PORT : 5000;
         // Create expressjs application
         this.app = express();
-        this.app.use(express.static(path.resolve('boxes/dist/boxes/')));
+        this.app.use(express.static(path.resolve('dist/boxes/')));
         // Route our backend calls
         this.app.get('/api', function (req, res) { return res.json({ application: 'Reibo collection' }); });
         // Redirect all the other resquests
         this.app.get('*', function (req, res) {
             if (allowedExt.filter(function (ext) { return req.url.indexOf(ext) > 0; }).length > 0) {
-                res.sendFile(path.resolve('boxes/dist/boxes/index.html'));
+                res.sendFile(path.resolve('dist/boxes/index.html'));
             }
             else {
-                res.sendFile(path.resolve('boxes/dist/boxes/index.html'));
+                res.sendFile(path.resolve('dist/boxes/index.html'));
             }
         });
         // Depending on your own needs, this can be extended

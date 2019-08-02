@@ -15,7 +15,9 @@ export class NavbarComponent implements OnInit {
   }
 
   public onSubmit() {
-    this.usersService.getUsers();
+    this.usersService.getUsers().subscribe( res => {
+      console.log('users', res);
+    });
   }
 
 }

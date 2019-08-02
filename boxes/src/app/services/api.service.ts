@@ -14,7 +14,7 @@ export class ApiService {
       this.base = `http://${window.location.host}/`.slice(0, -5) + '5000/api-';
     }
   }
-  public get<T>(url) {
+  public get<T>(url): T {
     return this.http.get(this.base + url) as any;
   }
 }

@@ -15,5 +15,8 @@ export class ApiService {
 
     console.log(window.location.host);
     console.log(this.base);
+    this.http.get(this.base + 'api').subscribe( res => {
+      console.log(res);
+    });
   }
 }

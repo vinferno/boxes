@@ -34,7 +34,7 @@ class Server {
     constructor() {
         // Create expressjs application
         this.app = express();
-        this.app.use(express.static(path.resolve('dist/boxes/')));
+        this.app.use(express.static(path.resolve('dist/boxes')));
         // Route our backend calls
         this.app.get('/api', (req, res) => res.json({ application: 'Reibo collection' }));
 

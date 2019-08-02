@@ -8,6 +8,7 @@ const fs = require('fs');
 const dirs = fs.readdirSync(path.resolve('./'));
 console.log(dirs);
 const express = require('express');
+const cors = require('cors');
 
 
 // Allowed extensions list can be extended depending on your own needs
@@ -34,6 +35,9 @@ class Server {
     constructor() {
         // Create expressjs application
         this.app = express();
+        this.app.use(cors());
+
+        console.log('cors');
         this.app.use(express.static(path.resolve('dist/boxes')));
         // Route our backend calls
         this.app.get('/api', (req, res) => res.json({ application: 'Reibo collection' }));

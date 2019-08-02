@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@types/express-serve-static-core": "^4.16.7",
+    "cors": "^2.8.5",
     "es6-shim": "^0.35.5",
     "express": "^4.17.1",
     "moment": "^2.24.0",

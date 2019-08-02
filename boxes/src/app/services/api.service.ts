@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ApiService {
 
-  public base = window.location.host === 'localhost:4200' ? 'https://localhost:4200/' : 'https://artboxes.herokuapp.com/';
+  public base = `https://${window.location.host}/`;
   constructor(
     private http: HttpClient,
   ) { }
@@ -15,7 +15,12 @@ export class ApiService {
 
     console.log(window.location.host);
     console.log(this.base);
-    this.http.get(this.base + 'api').subscribe( res => {
+    if (this.base.includes('localhost')) {
+      this.base = `http://${window.location.host}/`.slice(0, -5) + '5000/';
+    }
+    const url = this.base + 'api';
+    console.log('url', url);
+    this.http.get(url).subscribe( res => {
       console.log(res);
     });
   }

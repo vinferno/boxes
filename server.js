@@ -9,6 +9,7 @@ var fs = require('fs');
 var dirs = fs.readdirSync(path.resolve('./'));
 console.log(dirs);
 var express = require('express');
+var cors = require('cors');
 // Allowed extensions list can be extended depending on your own needs
 var allowedExt = [
     '.js',
@@ -27,7 +28,9 @@ var Server = /** @class */ (function () {
         this.port = process.env.PORT ? process.env.PORT : 5000;
         // Create expressjs application
         this.app = express();
-        this.app.use(express.static(path.resolve('dist/boxes/')));
+        this.app.use(cors());
+        console.log('cors');
+        this.app.use(express.static(path.resolve('dist/boxes')));
         // Route our backend calls
         this.app.get('/api', function (req, res) { return res.json({ application: 'Reibo collection' }); });
         // Redirect all the other resquests

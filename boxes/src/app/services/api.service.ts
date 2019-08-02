@@ -11,8 +11,9 @@ export class ApiService {
     private http: HttpClient,
   ) {
     if (this.base.includes('localhost')) {
-      this.base = `http://${window.location.host}/`.slice(0, -5) + '5000/api-';
+      this.base = `http://${window.location.host}/`.slice(0, -5) + '5000/';
     }
+    this.base += 'api-';
   }
   public get<T>(url): T {
     return this.http.get(this.base + url) as any;

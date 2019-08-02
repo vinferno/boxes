@@ -9,19 +9,12 @@ export class ApiService {
   public base = `https://${window.location.host}/`;
   constructor(
     private http: HttpClient,
-  ) { }
-
-  public test() {
-
-    console.log(window.location.host);
-    console.log(this.base);
+  ) {
     if (this.base.includes('localhost')) {
-      this.base = `http://${window.location.host}/`.slice(0, -5) + '5000/';
+      this.base = `http://${window.location.host}/`.slice(0, -5) + '5000/api-';
     }
-    const url = this.base + 'api';
-    console.log('url', url);
-    this.http.get(url).subscribe( res => {
-      console.log(res);
-    });
+  }
+  public get<T>(url) {
+    return this.http.get(this.base + url) as any;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from "../../services/api.service";
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'vf-navbar',
@@ -8,13 +9,13 @@ import {ApiService} from "../../services/api.service";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private apiService: ApiService) { }
+  constructor(private usersService: UsersService) { }
 
   ngOnInit() {
   }
 
   public onSubmit() {
-    this.apiService.test();
+    this.usersService.getUsers();
   }
 
 }

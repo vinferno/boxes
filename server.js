@@ -32,6 +32,7 @@ var Server = /** @class */ (function () {
         console.log('cors');
         this.app.use(express.static(path.resolve('dist/boxes')));
         // Route our backend calls
+        this.app.get('/api-users', function (req, res) { return res.json({ data: [] }); });
         this.app.get('/api', function (req, res) { return res.json({ application: 'Reibo collection' }); });
         // Redirect all the other resquests
         this.app.get('*', function (req, res) {

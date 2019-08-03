@@ -10,6 +10,9 @@ var dirs = fs.readdirSync(path.resolve('./'));
 console.log(dirs);
 var express = require('express');
 var cors = require('cors');
+var mongoose = require('mongoose');
+require('dotenv').config();
+var db_uri = "mongodb://" + process.env.DBUSER + ":" + process.env.DBPASS + "@ds259207.mlab.com:59207/artboxes";
 // Allowed extensions list can be extended depending on your own needs
 var allowedExt = [
     '.js',
@@ -26,9 +29,15 @@ var Server = /** @class */ (function () {
     function Server() {
         var _this = this;
         this.port = process.env.PORT ? process.env.PORT : 5000;
+        this.mongoose = mongoose;
         // Create expressjs application
         this.app = express();
         this.app.use(cors());
+        console.log('dbPass', process.env.DBPASS);
+        this.mongoose.connect(db_uri);
+        var db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'connection error:'));
+        db.once('open', function () { console.log('Connected to database was successful!'); });
         console.log('cors');
         this.app.use(express.static(path.resolve('dist/boxes')));
         // Route our backend calls

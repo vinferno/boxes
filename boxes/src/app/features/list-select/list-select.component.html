@@ -1,0 +1,6 @@
+<!-- List group -->
+<div class="list-group table-borderless" id="myList" >
+  <button  *ngFor="let user of users" class="list-group-item list-group-item-action table-borderless" (click)="selectToggle(user.username)" [ngClass]="{test: getIsSelected(user.username), active: false}"   role="tab">{{user.username}}</button>
+</div>
+
+{{selected | json}}

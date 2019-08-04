@@ -19,4 +19,7 @@ export class UsersService {
   public register(body) {
     return this.apiService.post<Observable<User>>('users', body);
   }
+  public getById(body) {
+    return this.apiService.post<Observable<User>>('user', body);
+  }
 }

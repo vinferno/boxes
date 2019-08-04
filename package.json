@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@types/express-serve-static-core": "^4.16.7",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "es6-shim": "^0.35.5",

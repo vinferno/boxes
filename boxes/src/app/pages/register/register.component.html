@@ -1,0 +1,30 @@
+<div class="container ">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4"> Registration</h1>
+      <p class="lead">This is the sign up portion of the application.</p>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="register()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" placeholder="Username" formControlName="username">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" placeholder="Email" formControlName="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+    </div>
+    <div class="form-group">
+      <label for="password">Password Confirm</label>
+      <input type="password" class="form-control" id="passwordConfirm" placeholder="Password Confirm" formControlName="passwordConfirm">
+    </div>
+    <button type="submit" [disabled]="form.invalid">Submit</button>
+  </form>
+{{form.value | json}}
+
+</div>

@@ -14,6 +14,9 @@ export class UsersService {
   constructor(private apiService: ApiService) { }
 
   public getUsers() {
-    return this.apiService.get<Observable<User>>('users');
+    return this.apiService.get<Observable<User[]>>('users');
+  }
+  public register(body) {
+    return this.apiService.post<Observable<User>>('users', body);
   }
 }

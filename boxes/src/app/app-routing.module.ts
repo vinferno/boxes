@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'dash', loadChildren: './pages/dash/dash.module#DashModule'},
   { path: 'register', loadChildren: './pages/register/register.module#RegisterModule'},
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfileModule'},
   { path: '**', redirectTo: 'dash'},
 ];
 

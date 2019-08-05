@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'vf-list-select',
@@ -13,6 +13,8 @@ export class ListSelectComponent implements OnInit {
     { username: 'test'},
     { username: 'test 2'}
     ];
+  @Input() public limit = 0;
+  @Output() public onSelectEmit: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
@@ -23,8 +25,12 @@ export class ListSelectComponent implements OnInit {
   }
 
   public selectToggle(prop) {
-
-    this.selected.includes(prop) ? this.selected.splice(this.selected.indexOf(prop), 1) : this.selected.push(prop);
+    const passedLimit = this.limit && this.selected.length >= this.limit;
+    this.selected.includes(prop) ? this.selected.splice(this.selected.indexOf(prop), 1) :
+      (passedLimit ? void(null) : this.selected.push(prop));
+    this.emitChange();
   }
-
+  private emitChange() {
+    this.onSelectEmit.emit(this.selected);
+  }
 }

@@ -17,4 +17,12 @@ export class DashComponent implements OnInit {
     });
   }
 
+  public onSelect(event) {
+    console.log('listened event', event);
+    if (event[0]) {
+      console.log('found');
+      this.usersService.gotoProfile(event[0]);
+    }
+  }
+
 }

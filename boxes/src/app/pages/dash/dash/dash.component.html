@@ -1,2 +1,2 @@
 <p>dash works!</p>
-<vf-list-select [users]="users"></vf-list-select>
+<vf-list-select [users]="users" [limit]="1" (onSelectEmit)="onSelect($event)"></vf-list-select>

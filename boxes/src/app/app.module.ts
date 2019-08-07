@@ -8,12 +8,14 @@ import {NavbarComponent} from './features/navbar/navbar.component';
 import {HttpClientModule} from "@angular/common/http";
 import { GalleryComponent } from './features/gallery/gallery.component';
 import {GalleryModule} from "./shared/gallery/gallery.module";
+import { FileUploaderComponent } from './features/file-uploader/file-uploader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     NavbarComponent,
+    FileUploaderComponent,
   ],
   imports: [
     BrowserModule,

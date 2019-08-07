@@ -1,2 +1,4 @@
-<p>file-uploader works!</p>
-<input  (change)="fileChange($event)"  type="file"  class="custom-file-input"  id="inputGroupFile01"  aria-describedby="inputGroupFileAddon01">
+<input type='file'  (change)="readURL($event);" id="inputGroupFile01" name="upload" />
+<img id="blah" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" />
+<button (click)="upload()">Submit</button>
+

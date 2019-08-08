@@ -15,6 +15,25 @@ var cors = require('cors');
 var mongoose = require('mongoose');
 require('dotenv').config();
 // endregion
+var multer = require('multer');
+var fileFilter = function (req, file, cb) {
+    if (file.mimetype.index('image') !== -1) {
+        cb(null, true);
+    }
+    else {
+        cb(null, false);
+    }
+};
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    },
+    fileFilter: fileFilter
+});
+var upload = multer({ storage: storage });
 var db_uri = "mongodb://" + process.env.DBUSER + ":" + process.env.DBPASS + "@ds259207.mlab.com:59207/artboxes";
 console.log(db_uri);
 // region Allowed extensions list can be extended depending on your own needs
@@ -56,7 +75,12 @@ var Server = /** @class */ (function () {
             var f = require('./server-helpers/requests/' + file);
             var split = file.split('.');
             console.log("/api/" + split[1]);
-            _this.app[split[0]]("/api/" + split[1], f);
+            if (file !== 'post.upload-image.ts') {
+                _this.app[split[0]]("/api/" + split[1], f);
+            }
+            else {
+                _this.app[split[0]]("/api/" + split[1], upload.single('upload'), f);
+            }
         });
         // this.app.get('/api-users', (req, res) => {
         //     return res.json({ data: [] });

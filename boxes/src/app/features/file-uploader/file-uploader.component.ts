@@ -13,8 +13,7 @@ export class FileUploaderComponent implements OnInit {
 
   ngOnInit() {
     this.imagesService.getAll().subscribe( res => {
-      console.log('res', res[0].image.data.data);
-      this.imageSrc = this.getSrcFromBuffer(res[0].image.data.data)
+      console.log(res);
     });
   }
   fileChange(element) {
@@ -26,7 +25,8 @@ export class FileUploaderComponent implements OnInit {
   upload() {
     const formData = new FormData();
     for (let i = 0; i < this.uploadedFiles.length; i++) {
-      formData.append("upload", this.uploadedFiles[i], this.uploadedFiles[i].name);
+      console.log(this.uploadedFiles, 'uploadFiles')
+      formData.append("upload", this.uploadedFiles[i]);
     }
     this.imagesService.upload(formData).subscribe((response) => {
         console.log('response received is ', response);
@@ -39,11 +39,16 @@ export class FileUploaderComponent implements OnInit {
       console.log(this.uploadedFiles);
       const file = event.target.files[0];
 
+      console.log('file', event.target.files)
       const reader = new FileReader();
-      reader.onload = e => this.imageSrc = reader.result;
+      reader.onload = (e) => {this.imageSrc = reader.result; this.getReaderResult(reader);  };
 
       reader.readAsDataURL(file);
     }
+  }
+
+  public getReaderResult(reader) {
+    console.log(reader.result, 'result', reader);
   }
 
 

@@ -18,7 +18,25 @@ require('dotenv').config ();
 // endregion
 
 
+const multer = require ( 'multer' );
+const fileFilter = ( req, file, cb ) => {
+    if ( file.mimetype.index ( 'image' ) !== -1 ) {
+        cb ( null, true );
+    } else {
+        cb ( null, false );
+    }
+};
+const storage = multer.diskStorage ( {
+    destination : ( req, file, cb ) => {
+        cb ( null, 'uploads/' )
+    },
+    filename : ( req, file, cb ) => {
+        cb ( null, file.originalname );
+    },
+    fileFilter : fileFilter
+} );
 
+const upload = multer ( { storage : storage } );
 
 const db_uri = `mongodb://${process.env.DBUSER}:${process.env.DBPASS}@ds259207.mlab.com:59207/artboxes`;
 console.log(db_uri);
@@ -74,7 +92,13 @@ class Server {
             const f = require('./server-helpers/requests/' + file );
             const split = file.split('.');
             console.log(`/api/${split[1]}`);
-            this.app[split[0]](`/api/${split[1]}`, f);
+            if (file !== 'post.upload-image.ts') {
+                this.app[split[0]](`/api/${split[1]}`, f);
+            }
+            else {
+                this.app[split[0]](`/api/${split[1]}`, upload.single ( 'upload' ), f);
+            }
+
         });
 
 

@@ -10,7 +10,7 @@ export class ImagesService {
   constructor(private apiService: ApiService) { }
 
   public upload(formData) {
-    return this.apiService.post<Observable<any>>('upload', formData);
+    return this.apiService.post<Observable<any>>('upload-image', formData);
   }
   public getAll() {
     return this.apiService.get<Observable<any>>('images');

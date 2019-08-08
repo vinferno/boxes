@@ -1,4 +1,5 @@
-<input type='file'  (change)="readURL($event);" id="inputGroupFile01" name="upload" />
+
+<input type='file'  (change)="readURL($event);" id="inputGroupFile01" name="upload" accept="image/*" />
 <img id="blah" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" />
 <button (click)="upload()">Submit</button>
 

@@ -14,6 +14,18 @@ var express = require('express');
 var cors = require('cors');
 var mongoose = require('mongoose');
 require('dotenv').config();
+var multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/profile_images');
+    },
+    filename: function (req, file, cb) {
+        // get the original name + the date + the extention
+        console.log('new name', path.basename(file.originalname, path.extname(file.originalname)) + '.' + Date.now() + '.' + path.extname(file.originalname));
+        cb(null, path.basename(file.originalname, path.extname(file.originalname)) + '.' + Date.now() + '.' + path.extname(file.originalname));
+    }
+});
+var upload = multer({ storage: storage });
 // endregion
 var db_uri = "mongodb://" + process.env.DBUSER + ":" + process.env.DBPASS + "@ds259207.mlab.com:59207/artboxes";
 console.log(db_uri);
@@ -56,7 +68,12 @@ var Server = /** @class */ (function () {
             var f = require('./server-helpers/requests/' + file);
             var split = file.split('.');
             console.log("/api/" + split[1]);
-            _this.app[split[0]]("/api/" + split[1], f);
+            if (file !== 'post.upload.ts') {
+                _this.app[split[0]]("/api/" + split[1], f);
+            }
+            else {
+                _this.app[split[0]]("/api/" + split[1], upload.single('upload'), f);
+            }
         });
         // this.app.get('/api-users', (req, res) => {
         //     return res.json({ data: [] });
@@ -87,6 +104,10 @@ var Server = /** @class */ (function () {
         // Catch errors
         this.app.on('error', function (error) {
             console.error(moment().format(), 'ERROR', error);
+        });
+        this.app.use(function (err, req, res, next) {
+            console.log('This is the invalid field ->', err.field);
+            next(err);
         });
         process.on('uncaughtException', function (error) {
             console.log(moment().format(), error);

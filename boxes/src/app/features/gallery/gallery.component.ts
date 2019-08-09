@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ImagesService} from "../../services/images.service";
 
 @Component({
   selector: 'vf-gallery',
@@ -8,15 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class GalleryComponent implements OnInit {
 
   public images = [
-    {},
-    {},
-    {},
-    {},
-    {},
   ];
-  constructor() { }
+  constructor(public imagesService: ImagesService) { }
 
   ngOnInit() {
+    this.imagesService.getAll().subscribe( res => {
+      console.log('images', res);
+      this.images = res;
+    })
   }
 
 }

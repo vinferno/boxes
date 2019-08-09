@@ -14,6 +14,19 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config ();
+var multer  = require('multer');
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/profile_images')
+    },
+    filename: (req, file, cb) => {
+        // get the original name + the date + the extention
+        console.log('new name', path.basename(file.originalname, path.extname(file.originalname)) + '.' + Date.now() + '.' + path.extname(file.originalname));
+        cb(null, path.basename(file.originalname, path.extname(file.originalname)) + '.' + Date.now() + '.' + path.extname(file.originalname))
+    }
+});
+
+var upload = multer({ storage: storage });
 
 // endregion
 
@@ -56,6 +69,7 @@ class Server {
         this.app.use(cors());
         this.app.use(express.static(path.resolve('dist/boxes')));
         this.app.use(bodyParser.json());
+
         // endregion
 
         // region Database Config
@@ -66,6 +80,7 @@ class Server {
 
         // endregion
 
+
         // Route our backend calls
 
         const files = fs.readdirSync(path.resolve('./server-helpers/requests'));
@@ -74,7 +89,11 @@ class Server {
             const f = require('./server-helpers/requests/' + file );
             const split = file.split('.');
             console.log(`/api/${split[1]}`);
-            this.app[split[0]](`/api/${split[1]}`, f);
+            if (file !== 'post.upload.ts') {
+                this.app[split[0]](`/api/${split[1]}`, f);
+            } else {
+                this.app[split[0]](`/api/${split[1]}`, upload.single('upload'),f);
+            }
         });
 
 
@@ -115,6 +134,11 @@ class Server {
         this.app.on('error', (error: any) => {
             console.error(moment().format(), 'ERROR', error);
         });
+        this.app.use(function (err, req, res, next) {
+            console.log('This is the invalid field ->', err.field)
+            next(err)
+        });
+
 
         process.on('uncaughtException', (error: any) => {
             console.log(moment().format(), error);

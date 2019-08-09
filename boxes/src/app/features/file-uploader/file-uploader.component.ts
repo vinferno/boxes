@@ -12,15 +12,6 @@ export class FileUploaderComponent implements OnInit {
   constructor(private imagesService: ImagesService) { }
 
   ngOnInit() {
-    this.imagesService.getAll().subscribe( res => {
-      console.log('res', res[0].image.data.data);
-      this.imageSrc = this.getSrcFromBuffer(res[0].image.data.data)
-    });
-  }
-  fileChange(element) {
-    this.uploadedFiles = element.target.files;
-    console.log(this.uploadedFiles);
-
   }
 
   upload() {
@@ -33,25 +24,13 @@ export class FileUploaderComponent implements OnInit {
       });
   }
   public readURL(event: any): void {
-
     if (event.target.files && event.target.files[0]) {
       this.uploadedFiles = event.target.files;
       console.log(this.uploadedFiles);
       const file = event.target.files[0];
-
       const reader = new FileReader();
       reader.onload = e => this.imageSrc = reader.result;
-
       reader.readAsDataURL(file);
     }
-  }
-
-
-  getSrcFromBuffer(buf) {
-    console.log('getSrcs')
-    const arrayBufferView = new Uint8Array( buf );
-    const blob = new Blob( [ arrayBufferView ], { type: "image/png" } );
-    const urlCreator = window.URL;
-    this.imageSrc = urlCreator.createObjectURL( blob );
   }
 }

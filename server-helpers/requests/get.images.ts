@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const UserModel = require("../../models/schemas/user.schema");
+const path = require('path');
+const ThumbnailModel = require(path.resolve('models/schemas/thumbnail.schema.ts'));
 
 module.exports = async function (req, res, next) {
-    console.log('get.users');
-    const query = UserModel.find();
+    console.log('get.images');
+    const query = ThumbnailModel.find();
     console.log(query instanceof mongoose.Query); // true
     const docs = await query; // Get the do
     res.json(docs);

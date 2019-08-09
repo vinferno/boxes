@@ -9,6 +9,7 @@ import {ImagesService} from "../../services/images.service";
 export class FileUploaderComponent implements OnInit {
   public uploadedFiles;
   public imageSrc;
+  public ready = true;
   constructor(private imagesService: ImagesService) { }
 
   ngOnInit() {
@@ -21,6 +22,9 @@ export class FileUploaderComponent implements OnInit {
     }
     this.imagesService.upload(formData).subscribe((response) => {
         console.log('response received is ', response);
+        this.ready = true;
+        this.imageSrc = null;
+        this.imagesService.goToImage(response._id);
       });
   }
   public readURL(event: any): void {

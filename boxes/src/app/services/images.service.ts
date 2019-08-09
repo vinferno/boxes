@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from "./api.service";
 import {Observable} from "rxjs";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImagesService {
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private router: Router) { }
 
   public upload(formData) {
     return this.apiService.post<Observable<any>>('upload', formData);
@@ -24,20 +25,30 @@ export class ImagesService {
   }
 
 
-  public encode (input) {
-    var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-    var output = "";
-    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-    var i = 0;
+  public encode(input) {
+    const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    let output = "";
+    let chr1;
+    let chr2;
+    let chr3;
+    let enc1;
+    let enc2;
+    let enc3;
+    let enc4;
+    let i = 0;
 
     while (i < input.length) {
       chr1 = input[i++];
       chr2 = i < input.length ? input[i++] : Number.NaN; // Not sure if the index
       chr3 = i < input.length ? input[i++] : Number.NaN; // checks are needed here
 
+      // tslint:disable-next-line:no-bitwise
       enc1 = chr1 >> 2;
+      // tslint:disable-next-line:no-bitwise
       enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+      // tslint:disable-next-line:no-bitwise
       enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+      // tslint:disable-next-line:no-bitwise
       enc4 = chr3 & 63;
 
       if (isNaN(chr2)) {
@@ -49,5 +60,12 @@ export class ImagesService {
         keyStr.charAt(enc3) + keyStr.charAt(enc4);
     }
     return output;
+  }
+  public getById(body) {
+    return this.apiService.post<Observable<{image: any}>>('image', body);
+  }
+
+  public goToImage(id) {
+    this.router.navigate(['detail-image', 'full-size', id]);
   }
 }

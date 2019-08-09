@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'dash', loadChildren: './pages/dash/dash.module#DashModule'},
   { path: 'register', loadChildren: './pages/register/register.module#RegisterModule'},
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfileModule'},
+  { path: 'detail-image', loadChildren: './pages/detail-image/detail-image.module#DetailImageModule'},
   { path: '**', redirectTo: 'dash'},
 ];
 

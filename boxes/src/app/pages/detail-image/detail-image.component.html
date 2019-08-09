@@ -1,0 +1,4 @@
+<p>detail-image works!</p>
+<div class="container row" *ngIf="image">
+  <img [src]="imagesService.convertBinaryToImageString(image)" alt="">
+</div>

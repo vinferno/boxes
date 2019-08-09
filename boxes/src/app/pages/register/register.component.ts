@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
   public register() {
     this.usersService.register(this.form.value).subscribe( res => {
       console.log(res);
-      this.router.navigateByUrl('/dash')
+      this.router.navigateByUrl('/dash');
     });
   }
 

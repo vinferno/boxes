@@ -17,6 +17,8 @@ module.exports = async function (req, res, next) {
     newThumb.image.contentType = req.file.mimetype;
     newThumb.image.filename = req.file.filename;
     newPic.save(function(err){
+        console.log('new Pic', newPic._id);
+        newThumb.linkedImage = newPic._id;
         newThumb.save(function(err2){
             res.json(newPic);
         });

@@ -1,7 +1,15 @@
-<input type='file'  (change)="readURL($event);" id="inputGroupFile01" name="upload" />
+
+<div *ngIf="ready">
+  <input type='file'  (change)="readURL($event);" id="inputGroupFile01" name="upload" />
+  <button [disabled]="!imageSrc" (click)="upload()">Submit</button>
+</div>
+<div *ngIf="!ready">
+  Your file has been uploaded. <button class="btn" (click)="ready = true">Continue</button>
+</div>
+
+
 <div class="container">
   <img  class='img-fluid' id="blah" [src]="  imageSrc || 'http://placehold.it/180'" alt="your image" />
 </div>
 
-<button [disabled]="!imageSrc" (click)="upload()">Submit</button>
 

@@ -68,4 +68,7 @@ export class ImagesService {
   public goToImage(id) {
     this.router.navigate(['detail-image', 'full-size', id]);
   }
+  public deleteImage(id) {
+    return this.apiService.post<Observable<{image: any}>>('delete-image', id);
+  }
 }

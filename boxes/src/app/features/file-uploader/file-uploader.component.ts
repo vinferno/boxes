@@ -11,6 +11,7 @@ export class FileUploaderComponent implements OnInit {
   public imageSrc;
   public ready = true;
   constructor(private imagesService: ImagesService) { }
+  public keywords = [];
 
   ngOnInit() {
   }
@@ -20,6 +21,7 @@ export class FileUploaderComponent implements OnInit {
     for (let i = 0; i < this.uploadedFiles.length; i++) {
       formData.append("upload", this.uploadedFiles[i], this.uploadedFiles[i].name);
     }
+    formData.append("username", "Groucho");
     this.imagesService.upload(formData).subscribe((response) => {
         console.log('response received is ', response);
         this.ready = true;
@@ -36,5 +38,13 @@ export class FileUploaderComponent implements OnInit {
       reader.onload = e => this.imageSrc = reader.result;
       reader.readAsDataURL(file);
     }
+  }
+
+  public addKeyword(keyword) {
+    this.keywords.push(keyword);
+  }
+
+  public removeKeyword(keyword) {
+    this.keywords.splice(this.keywords.indexOf(keyword), 1);
   }
 }

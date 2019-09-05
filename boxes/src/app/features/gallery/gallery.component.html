@@ -1,9 +1,9 @@
 <div class=" container row">
   {{ images.length }}
-  <div class="col-md-4" *ngFor="let img of images">
-    <div class="thumbnail">
+  <div  *ngFor="let img of images">
+    <div class="img-thumbnail">
       <a routerLink="detail-image/full-size/{{img.linkedImage}}">
-        <img [src]="img.image ? imagesService.convertBinaryToImageString(img) : 'https://unsplash.it/600/400'" alt="Lights" style="width:100%">
+        <img class="img-thumbnail" [src]="img.image ? imagesService.convertBinaryToImageString(img) : 'https://unsplash.it/600/400'" alt="Lights">
         <div class="caption">
           <p>{{img.image.filename}}</p>
         </div>

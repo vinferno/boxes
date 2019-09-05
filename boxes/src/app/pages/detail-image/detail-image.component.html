@@ -1,4 +1,5 @@
 <p>detail-image works!</p>
+<button (click)="deleteImage()">X</button>
 <div class="container row" *ngIf="image">
   <img [src]="imagesService.convertBinaryToImageString(image)" alt="">
 </div>

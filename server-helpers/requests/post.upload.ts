@@ -10,8 +10,8 @@ module.exports = async function (req, res, next) {
     var newPic = new ImageModel();
     var newThumb = new ThumbnailModel();
     newPic.image.data = fs.readFileSync(req.file.path);
-    newThumb.image.data = await imageThumbnail( newPic.image.data);
-    console.log(newThumb)
+    console.log(req.files);
+    newThumb.image.data = await imageThumbnail( newPic.image.data, { percentage: 50});
     newPic.image.contentType = req.file.mimetype;
     newPic.image.filename = req.file.filename;
     newThumb.image.contentType = req.file.mimetype;
@@ -24,7 +24,6 @@ module.exports = async function (req, res, next) {
         });
         fs.unlink(req.file.path, (err) => {
             if (err) throw err;
-            console.log(req.file.path, 'was deleted');
         });
     })
 };

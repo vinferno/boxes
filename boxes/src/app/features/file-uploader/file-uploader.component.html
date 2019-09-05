@@ -12,4 +12,10 @@
   <img  class='img-fluid' id="blah" [src]="  imageSrc || 'http://placehold.it/180'" alt="your image" />
 </div>
 
+<div>
+  <span *ngFor="let keyword of keywords">{{keyword}}  <button (click)="removeKeyword(keyword)">X</button> </span>
+</div>
+
+<input type="text" #keywordInput>
+<button (click)="addKeyword(keywordInput.value); keywordInput.value = ''" >add Keyword</button>
 

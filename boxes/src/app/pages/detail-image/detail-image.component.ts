@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ImagesService } from '../../services/images.service';
 
 @Component({
@@ -11,7 +11,7 @@ export class DetailImageComponent implements OnInit {
 
   public id;
   public image;
-  constructor(private route: ActivatedRoute, private imagesService: ImagesService) { }
+  constructor(private route: ActivatedRoute, private imagesService: ImagesService, private router: Router) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe( (param ) => {
@@ -19,6 +19,13 @@ export class DetailImageComponent implements OnInit {
       this.imagesService.getById({ _id: this.id}).subscribe( res => {
         this.image = res;
       });
+    });
+  }
+
+  deleteImage() {
+    this.imagesService.deleteImage({ _id: this.id}).subscribe( () => {
+      this.router.navigate(['']);
+
     });
   }
 

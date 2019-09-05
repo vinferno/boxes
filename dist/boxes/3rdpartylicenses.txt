@@ -13,6 +13,15 @@ MIT
 @angular/router
 MIT
 
+@ngrx/entity
+MIT
+
+@ngrx/store
+MIT
+
+@ngrx/store-devtools
+MIT
+
 bootstrap
 MIT
 The MIT License (MIT)

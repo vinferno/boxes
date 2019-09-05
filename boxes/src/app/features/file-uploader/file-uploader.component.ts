@@ -21,7 +21,7 @@ export class FileUploaderComponent implements OnInit {
     for (let i = 0; i < this.uploadedFiles.length; i++) {
       formData.append("upload", this.uploadedFiles[i], this.uploadedFiles[i].name);
     }
-    formData.append("username", "Groucho");
+    formData.append("keywords", JSON.stringify(this.keywords));
     this.imagesService.upload(formData).subscribe((response) => {
         console.log('response received is ', response);
         this.ready = true;

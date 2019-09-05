@@ -1,6 +1,6 @@
 <div class=" container row">
   {{ images.length }}
-  <div  *ngFor="let img of images">
+  <div  *ngFor="let img of images| async">
     <div class="img-thumbnail">
       <a routerLink="detail-image/full-size/{{img.linkedImage}}">
         <img class="img-thumbnail" [src]="img.image ? imagesService.convertBinaryToImageString(img) : 'https://unsplash.it/600/400'" alt="Lights">

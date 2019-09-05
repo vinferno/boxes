@@ -8,15 +8,16 @@ import {ImagesService} from "../../services/images.service";
 })
 export class GalleryComponent implements OnInit {
 
-  public images = [
-  ];
+  public images = null;
   constructor(public imagesService: ImagesService) { }
 
   ngOnInit() {
+    this.images = this.imagesService.images;
     this.imagesService.getAll().subscribe( res => {
       console.log('images', res);
-      this.images = res;
-    })
+      this.imagesService.updateImages(res);
+      this.images = this.imagesService.images;
+    });
   }
 
 }

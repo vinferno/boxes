@@ -9,6 +9,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { GalleryComponent } from './features/gallery/gallery.component';
 import {GalleryModule} from "./shared/gallery/gallery.module";
 import { FileUploaderComponent } from './features/file-uploader/file-uploader.component';
+import {FormsModule} from "@angular/forms";
+import {DataStoreModule} from "./data-store/data-store.module";
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { FileUploaderComponent } from './features/file-uploader/file-uploader.co
     AppRoutingModule,
     HttpClientModule,
     GalleryModule,
+    FormsModule,
+    DataStoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

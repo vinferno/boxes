@@ -1,0 +1,30 @@
+
+
+
+<h1>Welcome to Admin for: Gallery!</h1>
+<hr>
+<button class="button is-primary" (click)="createGallery()">CREATE new Gallery</button>
+<div *ngFor="let gallery of gallerys | async">
+
+  <h3>Gallery ID: {{ gallery.id }} </h3>
+<table>
+    <tr *ngFor="let prop of getProps(gallery)">
+        <td>
+            {{prop}}
+        </td>
+        <td>
+            <input #myInput type="text" [value]="gallery[prop]" [disabled]="prop === 'id' ">
+        </td>
+        
+        <td>
+            <button (click)="saveProp( gallery, prop, myInput )" [disabled]="prop === 'id' ">Save</button>
+        </td>
+        <td>
+            <button (click)="cancelProp(gallery, prop, myInput )">Cancel</button>
+        </td>
+    </tr>
+</table>
+  <button class="button is-danger" (click)="deleteGallery(gallery.id)">DELETE</button>
+   <hr>
+</div>
+

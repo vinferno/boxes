@@ -10,12 +10,19 @@ module.exports = async function (req, res, next) {
     var newPic = new ImageModel();
     var newThumb = new ThumbnailModel();
     newPic.image.data = fs.readFileSync(req.file.path);
-    console.log(req.files);
+    console.log(req.body);
     newThumb.image.data = await imageThumbnail( newPic.image.data, { percentage: 50});
     newPic.image.contentType = req.file.mimetype;
     newPic.image.filename = req.file.filename;
     newThumb.image.contentType = req.file.mimetype;
     newThumb.image.filename = req.file.filename;
+    newThumb.keywords = [];
+    newPic.keywords = [];
+    JSON.parse(req.body.keywords).forEach( keyword => {
+        newPic.keywords.push(keyword);
+        newThumb.keywords.push(keyword);
+    });
+
     newPic.save(function(err){
         console.log('new Pic', newPic._id);
         newThumb.linkedImage = newPic._id;

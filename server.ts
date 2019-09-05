@@ -17,9 +17,13 @@ require('dotenv').config ();
 var multer  = require('multer');
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
+        console.log('req', req);
         cb(null, 'uploads/profile_images')
     },
     filename: (req, file, cb) => {
+        console.log(req);
+        console.log('req.body', req.body);
+        console.log(file);
         // get the original name + the date + the extention
         console.log('new name', path.basename(file.originalname, path.extname(file.originalname)) + '.' + Date.now() + '.' + path.extname(file.originalname));
         cb(null, path.basename(file.originalname, path.extname(file.originalname)) + '.' + Date.now() + '.' + path.extname(file.originalname))
@@ -92,6 +96,7 @@ class Server {
             if (file !== 'post.upload.ts') {
                 this.app[split[0]](`/api/${split[1]}`, f);
             } else {
+
                 this.app[split[0]](`/api/${split[1]}`, upload.single('upload'),f);
             }
         });

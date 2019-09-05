@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from "../../services/api.service";
 import { UsersService } from '../../services/users.service';
+import {ImagesService} from "../../services/images.service";
 
 @Component({
   selector: 'vf-navbar',
@@ -9,15 +10,17 @@ import { UsersService } from '../../services/users.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private usersService: UsersService) { }
+  public keyword = '';
+  constructor(private usersService: UsersService, private imagesService: ImagesService) { }
 
   ngOnInit() {
   }
 
   public onSubmit() {
     console.log('onSubmit');
-    this.usersService.getUsers().subscribe( res => {
+    this.imagesService.getKeyword(this.keyword).subscribe( res => {
       console.log('users', res);
+      this.imagesService.updateImages(res);
     });
   }
 

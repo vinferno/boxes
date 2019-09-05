@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from "./api.service";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImagesService {
+  public images = new BehaviorSubject([]);
 
   constructor(private apiService: ApiService, private router: Router) { }
 
@@ -14,13 +15,14 @@ export class ImagesService {
     return this.apiService.post<Observable<any>>('upload', formData);
   }
   public getAll() {
-    return this.apiService.get<Observable<any>>('images');
+    return this.apiService.post<Observable<any>>('images', null);
   }
-
+  public getKeyword(keyword) {
+    console.log('want', keyword);
+    return this.apiService.post<Observable<any>>('images', {keyword});
+  }
   public convertBinaryToImageString(image) {
-    console.log('type', image.image.contentType);
     const answer =  `data:${image.image.contentType};base64,` + this.encode(new Uint8Array(image.image.data.data));
-    console.log('answer', answer);
     return answer;
   }
 
@@ -70,5 +72,10 @@ export class ImagesService {
   }
   public deleteImage(id) {
     return this.apiService.post<Observable<{image: any}>>('delete-image', id);
+  }
+
+  public updateImages(images) {
+    console.log('images update', images.length)
+    this.images.next(images);
   }
 }

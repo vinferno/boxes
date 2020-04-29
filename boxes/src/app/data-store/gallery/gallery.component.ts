@@ -12,7 +12,7 @@ import * as fromGallery from './gallery.reducer';
 })
 export class GalleryComponent implements OnInit {
 
-  gallerys: Observable<any>;
+  gallerys: Observable<fromGallery.Gallery[]>;
 
 
   constructor(private store: Store<fromGallery.State>) { }
